@@ -46,3 +46,9 @@ Pick Up adalah aplikasi on-demand service (mirip Gojek) yang menyediakan layanan
 - Outlined icons (bukan filled) untuk kesan clean
 - Stroke width: 1.5-2px
 - Warna mengikuti text color atau primary color untuk active state
+
+## Platform Guidelines (Wajib Acuan)
+
+- iOS: [09_ios_hig.md](09_ios_hig.md)
+- Android Accessibility: [10_android_accessibility.md](10_android_accessibility.md)
+- Referensi Android resmi: https://developer.android.com/design/ui/mobile/guides/foundations/accessibility

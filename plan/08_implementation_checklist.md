@@ -1,38 +1,52 @@
 # Pick Up - Implementation Checklist
 
+## Status Terakhir (Current Progress)
+
+Progress terakhir sudah sampai:
+
+- **Step 1 — Pre-Development Setup**: selesai
+- **Step 2 — Sprint 1: Auth & Home**: selesai
+- Bagian yang memang ditunda karena butuh konfigurasi manual tetap ditandai terpisah
+
 ## Pre-Development Setup
 
-- [ ] Rename project dari `demo_pick` ke `pickup` di pubspec.yaml
-- [ ] Setup folder structure sesuai `04_architecture.md`
-- [ ] Install semua dependencies
-- [ ] Setup `app_theme.dart` sesuai design system
-- [ ] Setup `app_colors.dart`, `app_typography.dart`, `app_spacing.dart`
-- [ ] Setup GoRouter dengan semua route names
-- [ ] Setup Dio API client dengan interceptor
-- [ ] Buat core widgets (button, text field, card, app bar)
-- [ ] Setup Firebase project (auth, firestore, storage, messaging)
-- [ ] Setup Google Maps API key (Android & iOS)
-- [ ] Prepare assets folder (icons, illustrations, lottie)
+- [x] Rename project dari `demo_pick` ke `pickup` di pubspec.yaml
+- [x] Setup folder structure sesuai `04_architecture.md`
+- [x] Install dependencies inti (BLoC, GoRouter, Dio, Maps, Firebase, secure storage, pin code, lottie, dll)
+- [x] Setup `app_theme.dart` sesuai design system (Material 3, putih, hijau #00C853, button 52, radius 12)
+- [x] Setup `app_colors.dart`, `app_typography.dart`, `app_spacing.dart`, `app_assets.dart`, `api_endpoints.dart`
+- [x] Setup GoRouter + ShellRoute + auth redirect + route names
+- [x] Setup Dio API client + interceptor + error mapper
+- [x] Buat core widgets (button, text field, card, app bar)
+- [x] Setup validator & formatter (locale `id_ID`)
+
+### Ditunda (Manual Configuration)
+
+- [ ] Setup Firebase project (`firebase init`, `google-services.json`, `GoogleService-Info.plist`)
+- [ ] Setup Google Maps API key (Android Manifest + iOS AppDelegate)
+- [ ] Ganti native bundle ID (masih `com.example.demo_pick`)
+- [ ] Finalisasi file asset aktual (SVG, JSON lottie, logo PNG)
 
 ## Sprint 1: Auth & Home
 
 ### Auth
-- [ ] Splash screen dengan logo animation
-- [ ] Onboarding (3 slides dengan PageView)
-- [ ] Login screen (phone input + social login buttons)
-- [ ] OTP verification screen (6 digit input, timer, resend)
-- [ ] Auth BLoC (send OTP, verify OTP, check auth state)
-- [ ] Setup profile screen (untuk user baru)
-- [ ] Persistent login (secure storage untuk token)
+- [x] Splash screen dengan logo animation 1.2s
+- [x] Onboarding (3 slides + smooth indicator)
+- [x] Login screen (phone +62 + placeholder Google/Apple)
+- [x] OTP verification screen (pin code 6 digit + timer 60s + resend)
+- [x] Auth BLoC (send OTP, verify OTP, check auth state)
+- [x] Setup profile screen (untuk user baru)
+- [x] Persistent login (`flutter_secure_storage` untuk token, bukan SharedPreferences)
+- [x] Mock mode OTP (`useMock=true`, OTP: `123456`)
 
 ### Home
-- [ ] Home screen layout
-- [ ] Service grid widget
-- [ ] Promo banner carousel (auto-scroll)
-- [ ] Recent orders section
-- [ ] Nearby restaurants section (horizontal scroll)
-- [ ] Search bar (navigasi ke search screen)
-- [ ] Bottom navigation bar (5 tabs)
+- [x] Home screen layout
+- [x] Service grid widget (3 kolom)
+- [x] Promo banner carousel (auto-scroll 4 detik)
+- [x] Recent orders section
+- [x] Nearby restaurants section (horizontal scroll)
+- [x] Search bar (navigasi ke search screen)
+- [x] Main shell + bottom navigation bar (5 tabs)
 
 ## Sprint 2: PickRide
 

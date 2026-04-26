@@ -7,5 +7,6 @@ void main() {
     await tester.pumpWidget(const PickUpApp());
     await tester.pump();
     expect(find.text('Pick Up'), findsWidgets);
+    await tester.pump(const Duration(milliseconds: 1300));
   });
 }

@@ -32,7 +32,7 @@ class AuthRemoteDataSource {
   }) async {
     final res = await _client.put<Map<String, dynamic>>(
       ApiEndpoints.userMe,
-      body: {'name': name, if (email != null) 'email': email},
+      body: {'name': name, 'email': ?email},
     );
     final data = (res.data?['data'] as Map<String, dynamic>?) ?? {};
     return UserModel.fromJson(data);

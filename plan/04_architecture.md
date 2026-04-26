@@ -12,8 +12,9 @@ Presentation (UI)  -->  Domain (Business Logic)  -->  Data (Repository)
 ```
 
 ## State Management
-- **BLoC / Cubit** untuk state management utama
-- **Provider** untuk dependency injection sederhana (jika diperlukan)
+- **BLoC / Cubit** untuk state management feature flow (auth, booking, tracking)
+- **flutter_riverpod** untuk dependency injection + global app state ringan (theme/session/helper provider)
+- Hindari `Provider` legacy, fokus ke kombinasi BLoC + Riverpod
 
 ## Folder Structure
 
@@ -250,7 +251,8 @@ dependencies:
   equatable: ^2.0.7
 
   # Navigation
-  go_router: ^14.0.0
+  go_router: ^latest
+  flutter_riverpod: ^latest
 
   # Network
   dio: ^5.4.0
@@ -271,10 +273,13 @@ dependencies:
   cloud_firestore: ^5.0.0
 
   # UI
-  cached_network_image: ^3.4.0
+  shadcn_ui: ^latest
+  flutter_form_builder: ^latest
+  cached_network_image: ^latest
+  flutter_svg: ^latest
+  lottie: ^latest
+  fl_chart: ^latest
   shimmer: ^3.0.0
-  lottie: ^3.1.0
-  flutter_svg: ^2.0.0
 
   # Utils
   intl: ^0.19.0
@@ -285,6 +290,20 @@ dependencies:
   # Icons
   iconsax_flutter: ^1.0.0
 ```
+
+## Komponen UI Prioritas (`shadcn_ui`)
+
+Gunakan `shadcn_ui` sebagai building blocks, lalu bungkus ke komponen internal `pickup_*` agar desain tetap konsisten lintas fitur:
+
+- `ShadButton` -> wrapper di `pickup_button.dart` (tinggi 52, radius 12, state loading/disabled)
+- `ShadInput` / form controls -> wrapper di `pickup_text_field.dart` + integrasi `flutter_form_builder`
+- `ShadCard` -> wrapper di `pickup_card.dart` untuk list, promo, dan summary
+- `ShadBadge` -> status order/payment
+- `ShadSheet` / `ShadDialog` -> payment picker, konfirmasi cancel
+- `ShadTabs` -> Activity (ongoing/completed), riwayat transaksi
+- `ShadSkeleton` -> loading state list (home, restoran, history)
+
+Catatan: seluruh wrapper tetap wajib mengikuti spec `plan/05_design_system.md` + aksesibilitas Android di `plan/10_android_accessibility.md`.
 
 ## Naming Convention
 - **Files**: snake_case (`home_screen.dart`)

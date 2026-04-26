@@ -8,28 +8,28 @@ sealed class ApiException implements Exception {
 }
 
 class NetworkException extends ApiException {
-  const NetworkException([String message = 'Tidak ada koneksi internet'])
-      : super(message, code: 'NETWORK');
+  const NetworkException([super.message = 'Tidak ada koneksi internet'])
+      : super(code: 'NETWORK');
 }
 
 class TimeoutException extends ApiException {
-  const TimeoutException([String message = 'Permintaan timeout'])
-      : super(message, code: 'TIMEOUT');
+  const TimeoutException([super.message = 'Permintaan timeout'])
+      : super(code: 'TIMEOUT');
 }
 
 class UnauthorizedException extends ApiException {
-  const UnauthorizedException([String message = 'Sesi berakhir, silakan login ulang'])
-      : super(message, code: 'UNAUTHORIZED');
+  const UnauthorizedException([super.message = 'Sesi berakhir, silakan login ulang'])
+      : super(code: 'UNAUTHORIZED');
 }
 
 class NotFoundException extends ApiException {
-  const NotFoundException([String message = 'Data tidak ditemukan'])
-      : super(message, code: 'NOT_FOUND');
+  const NotFoundException([super.message = 'Data tidak ditemukan'])
+      : super(code: 'NOT_FOUND');
 }
 
 class ServerException extends ApiException {
-  const ServerException([String message = 'Server bermasalah, coba lagi nanti'])
-      : super(message, code: 'SERVER');
+  const ServerException([super.message = 'Server bermasalah, coba lagi nanti'])
+      : super(code: 'SERVER');
 }
 
 class BadRequestException extends ApiException {
@@ -37,6 +37,6 @@ class BadRequestException extends ApiException {
 }
 
 class UnknownException extends ApiException {
-  const UnknownException([String message = 'Terjadi kesalahan'])
-      : super(message, code: 'UNKNOWN');
+  const UnknownException([super.message = 'Terjadi kesalahan'])
+      : super(code: 'UNKNOWN');
 }

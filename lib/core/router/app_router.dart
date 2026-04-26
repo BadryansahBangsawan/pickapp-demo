@@ -25,52 +25,53 @@ class AppRouter {
     routes: [
       GoRoute(
         path: RouteNames.splash,
-        builder: (_, __) => const SplashScreen(),
+        builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: RouteNames.onboarding,
-        builder: (_, __) => const OnboardingScreen(),
+        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         path: RouteNames.login,
-        builder: (_, __) => const LoginScreen(),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: RouteNames.otp,
-        builder: (_, __) => const OtpScreen(),
+        builder: (context, state) => const OtpScreen(),
       ),
       GoRoute(
         path: RouteNames.setupProfile,
-        builder: (_, __) => const SetupProfileScreen(),
+        builder: (context, state) => const SetupProfileScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => MainShell(child: child),
         routes: [
           GoRoute(
             path: RouteNames.home,
-            pageBuilder: (_, __) => const NoTransitionPage(child: HomeScreen()),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: HomeScreen()),
           ),
           GoRoute(
             path: RouteNames.activity,
-            pageBuilder: (_, __) => const NoTransitionPage(
+            pageBuilder: (context, state) => const NoTransitionPage(
               child: PlaceholderTabScreen(title: 'Activity', icon: Icons.receipt_long_outlined),
             ),
           ),
           GoRoute(
             path: RouteNames.payment,
-            pageBuilder: (_, __) => const NoTransitionPage(
+            pageBuilder: (context, state) => const NoTransitionPage(
               child: PlaceholderTabScreen(title: 'PickPay', icon: Icons.account_balance_wallet_outlined),
             ),
           ),
           GoRoute(
             path: RouteNames.chat,
-            pageBuilder: (_, __) => const NoTransitionPage(
+            pageBuilder: (context, state) => const NoTransitionPage(
               child: PlaceholderTabScreen(title: 'Chat', icon: Icons.chat_bubble_outline),
             ),
           ),
           GoRoute(
             path: RouteNames.profile,
-            pageBuilder: (_, __) => const NoTransitionPage(
+            pageBuilder: (context, state) => const NoTransitionPage(
               child: PlaceholderTabScreen(title: 'Akun', icon: Icons.person_outline),
             ),
           ),

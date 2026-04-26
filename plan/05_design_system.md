@@ -157,6 +157,32 @@ Hindari gradient, pattern background, atau ornamen berlebihan.
 
 ---
 
+## Komponen `shadcn_ui` yang Dipakai
+
+Pakai komponen `shadcn_ui` sebagai dasar, lalu override token warna/spacing supaya tetap sesuai brand Pick Up.
+
+| Kebutuhan UI Pick Up | Komponen Dasar `shadcn_ui` | Integrasi di App |
+|---|---|---|
+| CTA utama (Login, Pesan) | `ShadButton` | Dibungkus di `pickup_button.dart` (height 52, radius 12, hijau #00C853) |
+| Input form (HP, OTP helper, profile) | `ShadInput` + komponen form `flutter_form_builder` | Dibungkus di `pickup_text_field.dart` |
+| Card konten | `ShadCard` | Dibungkus di `pickup_card.dart` |
+| Badge status | `ShadBadge` | Status order/payment (active, pending, cancelled) |
+| Tabs riwayat | `ShadTabs` | Activity: ongoing/completed |
+| Bottom sheet / dialog konfirmasi | `ShadSheet`, `ShadDialog` | Payment selector, cancel confirmation |
+| Loading skeleton | `ShadSkeleton` | Home sections, list restoran, riwayat transaksi |
+
+Prinsip: API komponen umum tetap lewat `core/widgets/pickup_*` agar migrasi toolkit tidak menyentuh seluruh fitur.
+
+## Accessibility Baseline (Android + iOS)
+
+- Touch target minimum **48dp** (Android) dan minimal **44pt** iOS.
+- Kontras teks minimum **4.5:1**, elemen non-teks minimum **3:1**.
+- Jangan andalkan gesture-only action; sediakan tombol alternatif (contoh swipe delete + ikon hapus).
+- Semua ikon fungsional wajib punya label semantics, ikon dekoratif harus diset dekoratif (hidden dari screen reader).
+- Seluruh detail Android accessibility mengacu ke [plan/10_android_accessibility.md](10_android_accessibility.md).
+
+---
+
 ## Animations & Transitions
 
 - **Page transition**: Slide dari kanan (iOS style), fade + slide up (Android)

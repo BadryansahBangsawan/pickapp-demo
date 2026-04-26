@@ -42,7 +42,8 @@ class NearbyRestaurants extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.base),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.md),
+            separatorBuilder: (context, index) =>
+                const SizedBox(width: AppSpacing.md),
             itemBuilder: (context, i) => _RestaurantCard(item: items[i]),
           ),
         ),
