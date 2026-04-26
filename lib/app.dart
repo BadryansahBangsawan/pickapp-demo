@@ -9,7 +9,9 @@ import 'features/auth/data/datasources/auth_local_datasource.dart';
 import 'features/auth/data/datasources/auth_remote_datasource.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/chat/presentation/bloc/chat_cubit.dart';
 import 'features/food/presentation/bloc/cart_cubit.dart';
+import 'features/profile/presentation/bloc/profile_cubit.dart';
 
 class PickUpApp extends StatefulWidget {
   const PickUpApp({super.key});
@@ -21,6 +23,8 @@ class PickUpApp extends StatefulWidget {
 class _PickUpAppState extends State<PickUpApp> {
   late final AuthBloc _authBloc;
   late final CartCubit _cartCubit;
+  late final ChatCubit _chatCubit;
+  late final ProfileCubit _profileCubit;
   late final AppRouter _appRouter;
 
   @override
@@ -36,6 +40,8 @@ class _PickUpAppState extends State<PickUpApp> {
     );
     _authBloc = AuthBloc(authRepo);
     _cartCubit = CartCubit();
+    _chatCubit = ChatCubit();
+    _profileCubit = ProfileCubit();
     _appRouter = AppRouter(_authBloc);
   }
 
@@ -43,6 +49,8 @@ class _PickUpAppState extends State<PickUpApp> {
   void dispose() {
     _authBloc.close();
     _cartCubit.close();
+    _chatCubit.close();
+    _profileCubit.close();
     super.dispose();
   }
 
@@ -52,6 +60,8 @@ class _PickUpAppState extends State<PickUpApp> {
       providers: [
         BlocProvider.value(value: _authBloc),
         BlocProvider.value(value: _cartCubit),
+        BlocProvider.value(value: _chatCubit),
+        BlocProvider.value(value: _profileCubit),
       ],
       child: MaterialApp.router(
         title: 'Pick Up',

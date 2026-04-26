@@ -14,6 +14,11 @@ class RouteNames {
   static const String payment = '/payment';
   static const String chat = '/chat';
   static const String profile = '/profile';
+  static const String chatRoom = '/chat/room';
+  static const String editProfile = '/profile/edit';
+  static const String savedAddresses = '/profile/addresses';
+  static const String settings = '/profile/settings';
+  static const String helpFaq = '/profile/help';
 
   // Ride
   static const String pickLocation = '/ride/pick-location';

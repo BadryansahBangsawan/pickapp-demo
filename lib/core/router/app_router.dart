@@ -9,6 +9,9 @@ import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/setup_profile_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
+import '../../features/chat/presentation/models/chat_models.dart';
+import '../../features/chat/presentation/screens/chat_list_screen.dart';
+import '../../features/chat/presentation/screens/chat_room_screen.dart';
 import '../../features/food/presentation/models/food_models.dart';
 import '../../features/food/presentation/screens/cart_screen.dart';
 import '../../features/food/presentation/screens/food_home_screen.dart';
@@ -17,12 +20,21 @@ import '../../features/food/presentation/screens/food_tracking_screen.dart';
 import '../../features/food/presentation/screens/restaurant_detail_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/main_shell.dart';
+import '../../features/profile/presentation/screens/edit_profile_screen.dart';
+import '../../features/profile/presentation/screens/help_faq_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/profile/presentation/screens/saved_addresses_screen.dart';
+import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/ride/presentation/models/ride_models.dart';
 import '../../features/ride/presentation/screens/choose_ride_screen.dart';
 import '../../features/ride/presentation/screens/pick_location_screen.dart';
 import '../../features/ride/presentation/screens/ride_complete_screen.dart';
 import '../../features/ride/presentation/screens/searching_driver_screen.dart';
 import '../../features/ride/presentation/screens/tracking_screen.dart';
+import '../../features/send/presentation/models/send_models.dart';
+import '../../features/send/presentation/screens/package_detail_screen.dart';
+import '../../features/send/presentation/screens/send_package_screen.dart';
+import '../../features/send/presentation/screens/send_tracking_screen.dart';
 import 'route_names.dart';
 
 class AppRouter {
@@ -37,23 +49,28 @@ class AppRouter {
     routes: [
       GoRoute(
         path: RouteNames.splash,
-        builder: (context, state) => const SplashScreen(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: SplashScreen()),
       ),
       GoRoute(
         path: RouteNames.onboarding,
-        builder: (context, state) => const OnboardingScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const OnboardingScreen()),
       ),
       GoRoute(
         path: RouteNames.login,
-        builder: (context, state) => const LoginScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const LoginScreen()),
       ),
       GoRoute(
         path: RouteNames.otp,
-        builder: (context, state) => const OtpScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const OtpScreen()),
       ),
       GoRoute(
         path: RouteNames.setupProfile,
-        builder: (context, state) => const SetupProfileScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const SetupProfileScreen()),
       ),
       ShellRoute(
         builder: (context, state, child) => MainShell(child: child),
@@ -83,94 +100,197 @@ class AppRouter {
           ),
           GoRoute(
             path: RouteNames.chat,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(
-                title: 'Chat',
-                icon: Icons.chat_bubble_outline,
-              ),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ChatListScreen()),
           ),
           GoRoute(
             path: RouteNames.profile,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(
-                title: 'Akun',
-                icon: Icons.person_outline,
-              ),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ProfileScreen()),
           ),
         ],
       ),
       GoRoute(
+        path: RouteNames.chatRoom,
+        pageBuilder: (context, state) {
+          final thread = state.extra is ChatThread
+              ? state.extra as ChatThread
+              : null;
+          if (thread == null) {
+            return _buildTransitionPage(state, const ChatListScreen());
+          }
+          return _buildTransitionPage(state, ChatRoomScreen(thread: thread));
+        },
+      ),
+      GoRoute(
         path: RouteNames.pickLocation,
-        builder: (context, state) => const PickLocationScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const PickLocationScreen()),
       ),
       GoRoute(
         path: RouteNames.chooseRide,
-        builder: (context, state) => ChooseRideScreen(
-          initialQuote: state.extra is RideQuote
-              ? state.extra as RideQuote
-              : null,
+        pageBuilder: (context, state) => _buildTransitionPage(
+          state,
+          ChooseRideScreen(
+            initialQuote: state.extra is RideQuote
+                ? state.extra as RideQuote
+                : null,
+          ),
         ),
       ),
       GoRoute(
         path: RouteNames.searchingDriver,
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final quote = state.extra is RideQuote
               ? state.extra as RideQuote
               : null;
-          if (quote == null) return const PickLocationScreen();
-          return SearchingDriverScreen(quote: quote);
+          if (quote == null) {
+            return _buildTransitionPage(state, const PickLocationScreen());
+          }
+          return _buildTransitionPage(
+            state,
+            SearchingDriverScreen(quote: quote),
+          );
         },
       ),
       GoRoute(
         path: RouteNames.tracking,
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final quote = state.extra is RideQuote
               ? state.extra as RideQuote
               : null;
-          if (quote == null) return const PickLocationScreen();
-          return TrackingScreen(quote: quote);
+          if (quote == null) {
+            return _buildTransitionPage(state, const PickLocationScreen());
+          }
+          return _buildTransitionPage(state, TrackingScreen(quote: quote));
         },
       ),
       GoRoute(
         path: RouteNames.rideComplete,
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final quote = state.extra is RideQuote
               ? state.extra as RideQuote
               : null;
-          if (quote == null) return const PickLocationScreen();
-          return RideCompleteScreen(quote: quote);
+          if (quote == null) {
+            return _buildTransitionPage(state, const PickLocationScreen());
+          }
+          return _buildTransitionPage(state, RideCompleteScreen(quote: quote));
         },
       ),
       GoRoute(
         path: RouteNames.foodHome,
-        builder: (context, state) => const FoodHomeScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const FoodHomeScreen()),
       ),
       GoRoute(
         path: RouteNames.restaurantDetail,
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final restaurant = state.extra is Restaurant
               ? state.extra as Restaurant
               : null;
-          if (restaurant == null) return const FoodHomeScreen();
-          return RestaurantDetailScreen(restaurant: restaurant);
+          if (restaurant == null) {
+            return _buildTransitionPage(state, const FoodHomeScreen());
+          }
+          return _buildTransitionPage(
+            state,
+            RestaurantDetailScreen(restaurant: restaurant),
+          );
         },
       ),
       GoRoute(
         path: RouteNames.cart,
-        builder: (context, state) => const CartScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const CartScreen()),
       ),
       GoRoute(
         path: RouteNames.foodOrderConfirm,
-        builder: (context, state) => const FoodOrderConfirmScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const FoodOrderConfirmScreen()),
       ),
       GoRoute(
         path: RouteNames.foodTracking,
-        builder: (context, state) => const FoodTrackingScreen(),
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const FoodTrackingScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.sendPackage,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const SendPackageScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.packageDetail,
+        pageBuilder: (context, state) {
+          final draft = state.extra is SendDraft
+              ? state.extra as SendDraft
+              : null;
+          if (draft == null) {
+            return _buildTransitionPage(state, const SendPackageScreen());
+          }
+          return _buildTransitionPage(state, PackageDetailScreen(draft: draft));
+        },
+      ),
+      GoRoute(
+        path: RouteNames.sendTracking,
+        pageBuilder: (context, state) {
+          final order = state.extra is SendOrder
+              ? state.extra as SendOrder
+              : null;
+          if (order == null) {
+            return _buildTransitionPage(state, const SendPackageScreen());
+          }
+          return _buildTransitionPage(state, SendTrackingScreen(order: order));
+        },
+      ),
+      GoRoute(
+        path: RouteNames.editProfile,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const EditProfileScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.savedAddresses,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const SavedAddressesScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.settings,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const SettingsScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.helpFaq,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const HelpFaqScreen()),
       ),
     ],
   );
+
+  CustomTransitionPage<void> _buildTransitionPage(
+    GoRouterState state,
+    Widget child,
+  ) {
+    return CustomTransitionPage<void>(
+      key: state.pageKey,
+      transitionDuration: const Duration(milliseconds: 260),
+      reverseTransitionDuration: const Duration(milliseconds: 220),
+      child: child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final curve = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+          reverseCurve: Curves.easeInCubic,
+        );
+        final offset = Tween<Offset>(
+          begin: const Offset(0, 0.04),
+          end: Offset.zero,
+        ).animate(curve);
+
+        return FadeTransition(
+          opacity: curve,
+          child: SlideTransition(position: offset, child: child),
+        );
+      },
+    );
+  }
 
   String? _redirect(BuildContext context, GoRouterState state) {
     final status = _authBloc.state.status;

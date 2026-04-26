@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_spacing.dart';
 
@@ -13,6 +14,7 @@ class PickupButton extends StatelessWidget {
     this.isLoading = false,
     this.icon,
     this.fullWidth = true,
+    this.enableHaptic = true,
   });
 
   final String label;
@@ -21,11 +23,23 @@ class PickupButton extends StatelessWidget {
   final bool isLoading;
   final IconData? icon;
   final bool fullWidth;
+  final bool enableHaptic;
 
   @override
   Widget build(BuildContext context) {
     final disabled = isLoading || onPressed == null;
-    final handler = disabled ? null : onPressed;
+    final handler = disabled
+        ? null
+        : () {
+            if (enableHaptic) {
+              if (variant == PickupButtonVariant.primary) {
+                HapticFeedback.mediumImpact();
+              } else {
+                HapticFeedback.selectionClick();
+              }
+            }
+            onPressed?.call();
+          };
 
     final child = isLoading
         ? const SizedBox(

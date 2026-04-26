@@ -104,40 +104,40 @@ Progress terakhir sudah sampai:
 ## Sprint 5: Chat & Profile
 
 ### Chat
-- [ ] Chat list screen
-- [ ] Chat room screen
-- [ ] Message bubble widget
-- [ ] Quick reply chips
-- [ ] WebSocket real-time chat
-- [ ] Image sharing (optional)
+- [x] Chat list screen
+- [x] Chat room screen
+- [x] Message bubble widget
+- [x] Quick reply chips
+- [x] WebSocket real-time chat
+- [x] Image sharing (optional)
 
 ### Profile
-- [ ] Profile screen (header + menu)
-- [ ] Edit profile screen (name, photo, email)
-- [ ] Photo picker & upload
-- [ ] Saved addresses screen (CRUD)
-- [ ] Settings screen (language, notification toggle)
-- [ ] Help & FAQ screen
-- [ ] Logout flow
+- [x] Profile screen (header + menu)
+- [x] Edit profile screen (name, photo, email)
+- [x] Photo picker & upload
+- [x] Saved addresses screen (CRUD)
+- [x] Settings screen (language, notification toggle)
+- [x] Help & FAQ screen
+- [x] Logout flow
 
 ## Sprint 6: PickSend & Polish
 
 ### PickSend
-- [ ] Send package screen (pickup & delivery address)
-- [ ] Package detail screen (size selector, photo, notes)
-- [ ] Send tracking screen
+- [x] Send package screen (pickup & delivery address)
+- [x] Package detail screen (size selector, photo, notes)
+- [x] Send tracking screen
 
 ### Polish
 - [ ] Shimmer loading untuk semua list screens
-- [ ] Empty state illustrations
+- [x] Empty state illustrations
 - [ ] Error handling screens (no internet, server error)
-- [ ] Pull to refresh
-- [ ] Smooth page transitions
-- [ ] Haptic feedback pada button press
+- [x] Pull to refresh
+- [x] Smooth page transitions
+- [x] Haptic feedback pada button press
 - [ ] App icon & splash screen asset
 - [ ] Performance profiling & optimization
-- [ ] Unit tests (BLoC, repository, use cases)
-- [ ] Widget tests (core widgets)
+- [x] Unit tests (BLoC, repository, use cases)
+- [x] Widget tests (core widgets)
 - [ ] Integration tests (critical flows)
 
 ---

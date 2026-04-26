@@ -27,9 +27,14 @@ class AuthRemoteDataSource {
   }
 
   Future<UserModel> updateProfile({required String name, String? email}) async {
+    final body = <String, dynamic>{'name': name};
+    if (email != null) {
+      body['email'] = email;
+    }
+
     final res = await _client.put<Map<String, dynamic>>(
       ApiEndpoints.userMe,
-      body: {'name': name, 'email': ?email},
+      body: body,
     );
     final data = (res.data?['data'] as Map<String, dynamic>?) ?? {};
     return UserModel.fromJson(data);

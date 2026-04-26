@@ -131,13 +131,7 @@ List<ServiceItem> _serviceItems(BuildContext context) => [
     icon: Icons.local_shipping_outlined,
     label: 'PickSend',
     color: const Color(0xFFFF9500),
-    onTap: () {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Fitur PickSend menyusul di sprint berikutnya.'),
-        ),
-      );
-    },
+    onTap: () => context.push(RouteNames.sendPackage),
   ),
   ServiceItem(
     icon: Icons.restaurant_outlined,
