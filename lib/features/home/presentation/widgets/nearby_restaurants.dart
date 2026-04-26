@@ -123,7 +123,11 @@ class _RestaurantCard extends StatelessWidget {
                       const SizedBox(height: AppSpacing.xs),
                       Row(
                         children: [
-                          const Icon(Icons.star, size: 14, color: AppColors.amber),
+                          const Icon(
+                            Icons.star,
+                            size: 14,
+                            color: AppColors.amber,
+                          ),
                           const SizedBox(width: 2),
                           Text(
                             item.rating.toStringAsFixed(1),

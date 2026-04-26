@@ -30,7 +30,8 @@ class PickupAppBar extends StatelessWidget implements PreferredSizeWidget {
     final canPop = Navigator.of(context).canPop();
     return AppBar(
       title: title == null ? null : Text(title!),
-      leading: leading ??
+      leading:
+          leading ??
           (showBack && canPop
               ? IconButton(
                   icon: const Icon(Icons.arrow_back_ios_new, size: 20),
@@ -38,7 +39,8 @@ class PickupAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
               : null),
       actions: actions,
-      bottom: bottom ??
+      bottom:
+          bottom ??
           (bottomBorder
               ? const PreferredSize(
                   preferredSize: Size.fromHeight(1),

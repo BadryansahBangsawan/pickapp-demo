@@ -30,13 +30,12 @@ class AuthState extends Equatable {
     String? pendingPhone,
     String? errorMessage,
     bool clearError = false,
-  }) =>
-      AuthState(
-        status: status ?? this.status,
-        user: user ?? this.user,
-        pendingPhone: pendingPhone ?? this.pendingPhone,
-        errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
-      );
+  }) => AuthState(
+    status: status ?? this.status,
+    user: user ?? this.user,
+    pendingPhone: pendingPhone ?? this.pendingPhone,
+    errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
+  );
 
   @override
   List<Object?> get props => [status, user, pendingPhone, errorMessage];

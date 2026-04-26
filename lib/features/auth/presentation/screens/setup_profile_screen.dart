@@ -34,11 +34,11 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
     context.read<AuthBloc>().add(
-          AuthProfileSubmitted(
-            name: _name.text.trim(),
-            email: _email.text.trim().isEmpty ? null : _email.text.trim(),
-          ),
-        );
+      AuthProfileSubmitted(
+        name: _name.text.trim(),
+        email: _email.text.trim().isEmpty ? null : _email.text.trim(),
+      ),
+    );
   }
 
   @override
@@ -52,7 +52,9 @@ class _SetupProfileScreenState extends State<SetupProfileScreen> {
             context.go(RouteNames.home);
           } else if (state.status == AuthStatus.failure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage ?? 'Gagal menyimpan profil')),
+              SnackBar(
+                content: Text(state.errorMessage ?? 'Gagal menyimpan profil'),
+              ),
             );
           }
         },
@@ -143,8 +145,11 @@ class _PhotoPickerPlaceholder extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColors.background, width: 2),
               ),
-              child: const Icon(Icons.camera_alt_outlined,
-                  size: 16, color: Colors.white),
+              child: const Icon(
+                Icons.camera_alt_outlined,
+                size: 16,
+                color: Colors.white,
+              ),
             ),
           ),
         ],

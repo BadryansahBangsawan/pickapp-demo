@@ -11,20 +11,20 @@ class UserModel extends User {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json['id'] as String,
-        phone: json['phone'] as String,
-        name: json['name'] as String?,
-        email: json['email'] as String?,
-        photoUrl: json['photoUrl'] as String?,
-        isProfileComplete: json['isProfileComplete'] as bool? ?? false,
-      );
+    id: json['id'] as String,
+    phone: json['phone'] as String,
+    name: json['name'] as String?,
+    email: json['email'] as String?,
+    photoUrl: json['photoUrl'] as String?,
+    isProfileComplete: json['isProfileComplete'] as bool? ?? false,
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'phone': phone,
-        'name': name,
-        'email': email,
-        'photoUrl': photoUrl,
-        'isProfileComplete': isProfileComplete,
-      };
+    'id': id,
+    'phone': phone,
+    'name': name,
+    'email': email,
+    'photoUrl': photoUrl,
+    'isProfileComplete': isProfileComplete,
+  };
 }

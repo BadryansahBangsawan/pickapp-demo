@@ -26,10 +26,7 @@ class AuthRemoteDataSource {
     return (token, user);
   }
 
-  Future<UserModel> updateProfile({
-    required String name,
-    String? email,
-  }) async {
+  Future<UserModel> updateProfile({required String name, String? email}) async {
     final res = await _client.put<Map<String, dynamic>>(
       ApiEndpoints.userMe,
       body: {'name': name, 'email': ?email},

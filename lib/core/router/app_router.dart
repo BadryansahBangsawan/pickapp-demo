@@ -9,8 +9,20 @@ import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/setup_profile_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
+import '../../features/food/presentation/models/food_models.dart';
+import '../../features/food/presentation/screens/cart_screen.dart';
+import '../../features/food/presentation/screens/food_home_screen.dart';
+import '../../features/food/presentation/screens/food_order_confirm_screen.dart';
+import '../../features/food/presentation/screens/food_tracking_screen.dart';
+import '../../features/food/presentation/screens/restaurant_detail_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/main_shell.dart';
+import '../../features/ride/presentation/models/ride_models.dart';
+import '../../features/ride/presentation/screens/choose_ride_screen.dart';
+import '../../features/ride/presentation/screens/pick_location_screen.dart';
+import '../../features/ride/presentation/screens/ride_complete_screen.dart';
+import '../../features/ride/presentation/screens/searching_driver_screen.dart';
+import '../../features/ride/presentation/screens/tracking_screen.dart';
 import 'route_names.dart';
 
 class AppRouter {
@@ -54,28 +66,108 @@ class AppRouter {
           GoRoute(
             path: RouteNames.activity,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(title: 'Activity', icon: Icons.receipt_long_outlined),
+              child: PlaceholderTabScreen(
+                title: 'Activity',
+                icon: Icons.receipt_long_outlined,
+              ),
             ),
           ),
           GoRoute(
             path: RouteNames.payment,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(title: 'PickPay', icon: Icons.account_balance_wallet_outlined),
+              child: PlaceholderTabScreen(
+                title: 'PickPay',
+                icon: Icons.account_balance_wallet_outlined,
+              ),
             ),
           ),
           GoRoute(
             path: RouteNames.chat,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(title: 'Chat', icon: Icons.chat_bubble_outline),
+              child: PlaceholderTabScreen(
+                title: 'Chat',
+                icon: Icons.chat_bubble_outline,
+              ),
             ),
           ),
           GoRoute(
             path: RouteNames.profile,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(title: 'Akun', icon: Icons.person_outline),
+              child: PlaceholderTabScreen(
+                title: 'Akun',
+                icon: Icons.person_outline,
+              ),
             ),
           ),
         ],
+      ),
+      GoRoute(
+        path: RouteNames.pickLocation,
+        builder: (context, state) => const PickLocationScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.chooseRide,
+        builder: (context, state) => ChooseRideScreen(
+          initialQuote: state.extra is RideQuote
+              ? state.extra as RideQuote
+              : null,
+        ),
+      ),
+      GoRoute(
+        path: RouteNames.searchingDriver,
+        builder: (context, state) {
+          final quote = state.extra is RideQuote
+              ? state.extra as RideQuote
+              : null;
+          if (quote == null) return const PickLocationScreen();
+          return SearchingDriverScreen(quote: quote);
+        },
+      ),
+      GoRoute(
+        path: RouteNames.tracking,
+        builder: (context, state) {
+          final quote = state.extra is RideQuote
+              ? state.extra as RideQuote
+              : null;
+          if (quote == null) return const PickLocationScreen();
+          return TrackingScreen(quote: quote);
+        },
+      ),
+      GoRoute(
+        path: RouteNames.rideComplete,
+        builder: (context, state) {
+          final quote = state.extra is RideQuote
+              ? state.extra as RideQuote
+              : null;
+          if (quote == null) return const PickLocationScreen();
+          return RideCompleteScreen(quote: quote);
+        },
+      ),
+      GoRoute(
+        path: RouteNames.foodHome,
+        builder: (context, state) => const FoodHomeScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.restaurantDetail,
+        builder: (context, state) {
+          final restaurant = state.extra is Restaurant
+              ? state.extra as Restaurant
+              : null;
+          if (restaurant == null) return const FoodHomeScreen();
+          return RestaurantDetailScreen(restaurant: restaurant);
+        },
+      ),
+      GoRoute(
+        path: RouteNames.cart,
+        builder: (context, state) => const CartScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.foodOrderConfirm,
+        builder: (context, state) => const FoodOrderConfirmScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.foodTracking,
+        builder: (context, state) => const FoodTrackingScreen(),
       ),
     ],
   );
@@ -85,7 +177,8 @@ class AppRouter {
     final loc = state.uri.path;
 
     final atSplash = loc == RouteNames.splash;
-    final atAuthFlow = loc == RouteNames.onboarding ||
+    final atAuthFlow =
+        loc == RouteNames.onboarding ||
         loc == RouteNames.login ||
         loc == RouteNames.otp;
     final atSetup = loc == RouteNames.setupProfile;

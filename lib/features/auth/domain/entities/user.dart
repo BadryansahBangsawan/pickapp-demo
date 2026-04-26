@@ -22,16 +22,22 @@ class User extends Equatable {
     String? email,
     String? photoUrl,
     bool? isProfileComplete,
-  }) =>
-      User(
-        id: id,
-        phone: phone,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        photoUrl: photoUrl ?? this.photoUrl,
-        isProfileComplete: isProfileComplete ?? this.isProfileComplete,
-      );
+  }) => User(
+    id: id,
+    phone: phone,
+    name: name ?? this.name,
+    email: email ?? this.email,
+    photoUrl: photoUrl ?? this.photoUrl,
+    isProfileComplete: isProfileComplete ?? this.isProfileComplete,
+  );
 
   @override
-  List<Object?> get props => [id, phone, name, email, photoUrl, isProfileComplete];
+  List<Object?> get props => [
+    id,
+    phone,
+    name,
+    email,
+    photoUrl,
+    isProfileComplete,
+  ];
 }

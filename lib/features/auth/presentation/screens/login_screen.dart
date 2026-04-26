@@ -93,7 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: AppSpacing.sm),
                   Text(
                     _error!,
-                    style: const TextStyle(color: AppColors.error, fontSize: 12),
+                    style: const TextStyle(
+                      color: AppColors.error,
+                      fontSize: 12,
+                    ),
                   ),
                 ],
                 const SizedBox(height: AppSpacing.xl),
@@ -113,7 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   label: 'Lanjut dengan Google',
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Google Sign-In belum tersedia')),
+                      const SnackBar(
+                        content: Text('Google Sign-In belum tersedia'),
+                      ),
                     );
                   },
                 ),
@@ -123,7 +128,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   label: 'Lanjut dengan Apple',
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Apple Sign-In belum tersedia')),
+                      const SnackBar(
+                        content: Text('Apple Sign-In belum tersedia'),
+                      ),
                     );
                   },
                 ),
@@ -157,7 +164,11 @@ class _OrDivider extends StatelessWidget {
 }
 
 class _SocialButton extends StatelessWidget {
-  const _SocialButton({required this.icon, required this.label, required this.onPressed});
+  const _SocialButton({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+  });
 
   final IconData icon;
   final String label;

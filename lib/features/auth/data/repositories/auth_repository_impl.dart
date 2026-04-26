@@ -33,11 +33,10 @@ class AuthRepositoryImpl implements AuthRepository {
       if (otp != '123456') {
         throw Exception('OTP salah. Coba 123456 (mock).');
       }
-      final user = UserModel(
-        id: 'mock-${phone.hashCode}',
-        phone: phone,
+      final user = UserModel(id: 'mock-${phone.hashCode}', phone: phone);
+      await local.saveToken(
+        'mock-token-${DateTime.now().millisecondsSinceEpoch}',
       );
-      await local.saveToken('mock-token-${DateTime.now().millisecondsSinceEpoch}');
       await local.saveUser(user);
       return user;
     }

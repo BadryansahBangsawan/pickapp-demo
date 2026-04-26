@@ -26,7 +26,10 @@ class PhoneInput extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.base),
       child: Row(
         children: [
-          const Text('+62', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+          const Text(
+            '+62',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
           const SizedBox(width: AppSpacing.sm),
           Container(width: 1, height: 24, color: AppColors.border),
           const SizedBox(width: AppSpacing.sm),
@@ -40,7 +43,10 @@ class PhoneInput extends StatelessWidget {
                 LengthLimitingTextInputFormatter(13),
               ],
               onSubmitted: onSubmitted,
-              style: const TextStyle(fontSize: 16, color: AppColors.textPrimary),
+              style: const TextStyle(
+                fontSize: 16,
+                color: AppColors.textPrimary,
+              ),
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: '8123456789',

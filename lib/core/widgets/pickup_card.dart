@@ -42,11 +42,7 @@ class PickupCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       borderRadius: radiusGeo,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: radiusGeo,
-        child: inner,
-      ),
+      child: InkWell(onTap: onTap, borderRadius: radiusGeo, child: inner),
     );
   }
 }

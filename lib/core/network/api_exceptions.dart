@@ -9,27 +9,28 @@ sealed class ApiException implements Exception {
 
 class NetworkException extends ApiException {
   const NetworkException([super.message = 'Tidak ada koneksi internet'])
-      : super(code: 'NETWORK');
+    : super(code: 'NETWORK');
 }
 
 class TimeoutException extends ApiException {
   const TimeoutException([super.message = 'Permintaan timeout'])
-      : super(code: 'TIMEOUT');
+    : super(code: 'TIMEOUT');
 }
 
 class UnauthorizedException extends ApiException {
-  const UnauthorizedException([super.message = 'Sesi berakhir, silakan login ulang'])
-      : super(code: 'UNAUTHORIZED');
+  const UnauthorizedException([
+    super.message = 'Sesi berakhir, silakan login ulang',
+  ]) : super(code: 'UNAUTHORIZED');
 }
 
 class NotFoundException extends ApiException {
   const NotFoundException([super.message = 'Data tidak ditemukan'])
-      : super(code: 'NOT_FOUND');
+    : super(code: 'NOT_FOUND');
 }
 
 class ServerException extends ApiException {
   const ServerException([super.message = 'Server bermasalah, coba lagi nanti'])
-      : super(code: 'SERVER');
+    : super(code: 'SERVER');
 }
 
 class BadRequestException extends ApiException {
@@ -38,5 +39,5 @@ class BadRequestException extends ApiException {
 
 class UnknownException extends ApiException {
   const UnknownException([super.message = 'Terjadi kesalahan'])
-      : super(code: 'UNKNOWN');
+    : super(code: 'UNKNOWN');
 }

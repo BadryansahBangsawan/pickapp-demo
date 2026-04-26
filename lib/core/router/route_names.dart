@@ -26,6 +26,7 @@ class RouteNames {
   static const String foodHome = '/food';
   static const String restaurantDetail = '/food/restaurant';
   static const String cart = '/food/cart';
+  static const String foodOrderConfirm = '/food/confirm';
   static const String foodTracking = '/food/tracking';
 
   // Send

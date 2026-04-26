@@ -21,7 +21,9 @@ class ApiClient {
       ),
     );
 
-    dio.interceptors.add(AuthInterceptor(storage ?? const FlutterSecureStorage()));
+    dio.interceptors.add(
+      AuthInterceptor(storage ?? const FlutterSecureStorage()),
+    );
     if (kDebugMode) dio.interceptors.add(LoggingInterceptor());
 
     return ApiClient._(dio);

@@ -21,6 +21,7 @@ class AppAssets {
   static const String iconPay = '$_iconsPath/pay.svg';
 
   // Lottie animations
-  static const String lottieSearchingDriver = '$_lottiePath/searching_driver.json';
+  static const String lottieSearchingDriver =
+      '$_lottiePath/searching_driver.json';
   static const String lottieSuccess = '$_lottiePath/success.json';
 }

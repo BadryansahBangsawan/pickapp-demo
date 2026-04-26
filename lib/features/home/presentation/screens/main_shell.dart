@@ -10,9 +10,24 @@ class MainShell extends StatelessWidget {
 
   static const _tabs = <_TabItem>[
     _TabItem(RouteNames.home, Icons.home_outlined, Icons.home, 'Home'),
-    _TabItem(RouteNames.activity, Icons.receipt_long_outlined, Icons.receipt_long, 'Activity'),
-    _TabItem(RouteNames.payment, Icons.account_balance_wallet_outlined, Icons.account_balance_wallet, 'Payment'),
-    _TabItem(RouteNames.chat, Icons.chat_bubble_outline, Icons.chat_bubble, 'Chat'),
+    _TabItem(
+      RouteNames.activity,
+      Icons.receipt_long_outlined,
+      Icons.receipt_long,
+      'Activity',
+    ),
+    _TabItem(
+      RouteNames.payment,
+      Icons.account_balance_wallet_outlined,
+      Icons.account_balance_wallet,
+      'Payment',
+    ),
+    _TabItem(
+      RouteNames.chat,
+      Icons.chat_bubble_outline,
+      Icons.chat_bubble,
+      'Chat',
+    ),
     _TabItem(RouteNames.profile, Icons.person_outline, Icons.person, 'Akun'),
   ];
 
@@ -67,7 +82,11 @@ class _TabItem {
 }
 
 class PlaceholderTabScreen extends StatelessWidget {
-  const PlaceholderTabScreen({super.key, required this.title, required this.icon});
+  const PlaceholderTabScreen({
+    super.key,
+    required this.title,
+    required this.icon,
+  });
   final String title;
   final IconData icon;
 
@@ -82,7 +101,13 @@ class PlaceholderTabScreen extends StatelessWidget {
             children: [
               Icon(icon, size: 64, color: AppColors.textHint),
               const SizedBox(height: 12),
-              Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               const SizedBox(height: 4),
               const Text(
                 'Akan tersedia di sprint berikutnya',

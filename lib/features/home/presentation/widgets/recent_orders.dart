@@ -83,7 +83,10 @@ class _RecentTile extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     item.address,
-                    style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.textSecondary,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -6,6 +6,8 @@ Progress terakhir sudah sampai:
 
 - **Step 1 — Pre-Development Setup**: selesai
 - **Step 2 — Sprint 1: Auth & Home**: selesai
+- **Step 3 — Sprint 2: PickRide**: selesai (kecuali WebSocket real-time)
+- **Step 4 — Sprint 3: PickFood**: selesai
 - Bagian yang memang ditunda karena butuh konfigurasi manual tetap ditandai terpisah
 
 ## Pre-Development Setup
@@ -50,33 +52,33 @@ Progress terakhir sudah sampai:
 
 ## Sprint 2: PickRide
 
-- [ ] Location search screen (autocomplete)
-- [ ] Pick location on map screen
-- [ ] Saved places integration
-- [ ] Choose ride screen (map + route + options)
-- [ ] Price estimation API call
-- [ ] Payment method selector bottom sheet
-- [ ] Searching driver screen (Lottie animation)
-- [ ] Driver found - info card
-- [ ] Live tracking screen (map + driver marker)
+- [x] Location search screen (autocomplete)
+- [x] Pick location on map screen (mode mock map)
+- [x] Saved places integration
+- [x] Choose ride screen (map + route + options)
+- [x] Price estimation API call (mock estimation)
+- [x] Payment method selector bottom sheet
+- [x] Searching driver screen (Lottie animation + fallback)
+- [x] Driver found - info card
+- [x] Live tracking screen (map + driver marker)
 - [ ] WebSocket connection untuk real-time location
-- [ ] Ride complete screen (rating + tip)
-- [ ] SOS button
-- [ ] Share trip link
+- [x] Ride complete screen (rating + tip)
+- [x] SOS button
+- [x] Share trip link
 
 ## Sprint 3: PickFood
 
-- [ ] Food home screen (categories + restaurant list)
-- [ ] Restaurant card widget
-- [ ] Category filter chips
-- [ ] Search restoran & makanan
-- [ ] Restaurant detail screen (info + menu)
-- [ ] Menu item detail bottom sheet
-- [ ] Add to cart logic (BLoC)
-- [ ] Cart screen (items, qty, total)
-- [ ] Cart badge on bottom sheet
-- [ ] Food order confirmation screen
-- [ ] Food tracking screen (status stepper + map)
+- [x] Food home screen (categories + restaurant list)
+- [x] Restaurant card widget
+- [x] Category filter chips
+- [x] Search restoran & makanan
+- [x] Restaurant detail screen (info + menu)
+- [x] Menu item detail bottom sheet
+- [x] Add to cart logic (BLoC/Cubit)
+- [x] Cart screen (items, qty, total)
+- [x] Cart badge / count indicator sebelum checkout
+- [x] Food order confirmation screen
+- [x] Food tracking screen (status stepper + map)
 
 ## Sprint 4: Payment & Activity
 

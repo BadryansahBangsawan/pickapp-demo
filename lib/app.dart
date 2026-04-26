@@ -9,6 +9,7 @@ import 'features/auth/data/datasources/auth_local_datasource.dart';
 import 'features/auth/data/datasources/auth_remote_datasource.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/food/presentation/bloc/cart_cubit.dart';
 
 class PickUpApp extends StatefulWidget {
   const PickUpApp({super.key});
@@ -19,6 +20,7 @@ class PickUpApp extends StatefulWidget {
 
 class _PickUpAppState extends State<PickUpApp> {
   late final AuthBloc _authBloc;
+  late final CartCubit _cartCubit;
   late final AppRouter _appRouter;
 
   @override
@@ -33,19 +35,24 @@ class _PickUpAppState extends State<PickUpApp> {
       useMock: true, // toggle off when backend is wired
     );
     _authBloc = AuthBloc(authRepo);
+    _cartCubit = CartCubit();
     _appRouter = AppRouter(_authBloc);
   }
 
   @override
   void dispose() {
     _authBloc.close();
+    _cartCubit.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: _authBloc),
+        BlocProvider.value(value: _cartCubit),
+      ],
       child: MaterialApp.router(
         title: 'Pick Up',
         debugShowCheckedModeBanner: false,

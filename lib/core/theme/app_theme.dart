@@ -83,7 +83,10 @@ class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
           textStyle: AppTypography.button,
-          minimumSize: const Size(AppTouchTarget.minimum, AppTouchTarget.minimum),
+          minimumSize: const Size(
+            AppTouchTarget.minimum,
+            AppTouchTarget.minimum,
+          ),
         ),
       ),
 
@@ -95,7 +98,10 @@ class AppTheme {
           vertical: AppSpacing.base,
         ),
         hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 16),
-        labelStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+        labelStyle: const TextStyle(
+          color: AppColors.textSecondary,
+          fontSize: 14,
+        ),
         border: _inputBorder(AppColors.border),
         enabledBorder: _inputBorder(AppColors.border),
         focusedBorder: _inputBorder(AppColors.primary),
@@ -116,7 +122,10 @@ class AppTheme {
         backgroundColor: AppColors.background,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textHint,
-        selectedLabelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+        selectedLabelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
         unselectedLabelStyle: TextStyle(fontSize: 12),
         type: BottomNavigationBarType.fixed,
         elevation: 0,
@@ -133,7 +142,9 @@ class AppTheme {
         backgroundColor: AppColors.background,
         surfaceTintColor: AppColors.background,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppRadius.xl),
+          ),
         ),
         showDragHandle: true,
       ),
@@ -143,7 +154,7 @@ class AppTheme {
   }
 
   static OutlineInputBorder _inputBorder(Color color) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        borderSide: BorderSide(color: color, width: 1.5),
-      );
+    borderRadius: BorderRadius.circular(AppRadius.md),
+    borderSide: BorderSide(color: color, width: 1.5),
+  );
 }

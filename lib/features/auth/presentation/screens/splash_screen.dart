@@ -18,11 +18,15 @@ class _SplashScreenState extends State<SplashScreen>
     duration: const Duration(milliseconds: 700),
   )..forward();
 
-  late final Animation<double> _fade =
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+  late final Animation<double> _fade = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeOut,
+  );
 
-  late final Animation<double> _scale = Tween<double>(begin: 0.85, end: 1.0)
-      .animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
+  late final Animation<double> _scale = Tween<double>(
+    begin: 0.85,
+    end: 1.0,
+  ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
 
   @override
   void initState() {
