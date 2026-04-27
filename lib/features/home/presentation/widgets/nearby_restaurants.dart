@@ -8,11 +8,13 @@ class NearbyRestaurantItem {
     required this.cuisine,
     required this.rating,
     required this.distanceKm,
+    required this.imageUrl,
   });
   final String name;
   final String cuisine;
   final double rating;
   final double distanceKm;
+  final String imageUrl;
 }
 
 class NearbyRestaurants extends StatelessWidget {
@@ -82,17 +84,31 @@ class _RestaurantCard extends StatelessWidget {
               children: [
                 Container(
                   height: 96,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.surface,
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(AppRadius.lg),
                     ),
                   ),
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.restaurant_outlined,
-                    size: 40,
-                    color: AppColors.textHint,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(AppRadius.lg),
+                    ),
+                    child: Image.network(
+                      item.imageUrl,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: AppColors.surface,
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.restaurant_outlined,
+                          size: 40,
+                          color: AppColors.textHint,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(

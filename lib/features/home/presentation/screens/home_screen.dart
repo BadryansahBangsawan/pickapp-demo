@@ -8,6 +8,8 @@ import '../../../../core/constants/app_typography.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../notification/presentation/bloc/notification_cubit.dart';
+import '../../../payment/presentation/bloc/wallet_cubit.dart';
+import '../../../payment/presentation/widgets/balance_card.dart';
 import '../widgets/nearby_restaurants.dart';
 import '../widgets/promo_banner.dart';
 import '../widgets/recent_orders.dart';
@@ -38,6 +40,19 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.base,
+                ),
+                child: _HomeBalanceCard(
+                  onTopUp: () => context.push(RouteNames.topUp),
+                  onTransfer: () => context.go(RouteNames.payment),
+                  onHistory: () => context.go(RouteNames.payment),
+                ),
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -177,6 +192,32 @@ List<ServiceItem> _serviceItems(BuildContext context) => [
   ),
 ];
 
+class _HomeBalanceCard extends StatelessWidget {
+  const _HomeBalanceCard({
+    required this.onTopUp,
+    required this.onTransfer,
+    required this.onHistory,
+  });
+
+  final VoidCallback onTopUp;
+  final VoidCallback onTransfer;
+  final VoidCallback onHistory;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<WalletCubit, WalletState>(
+      builder: (context, state) {
+        return BalanceCard(
+          balance: state.balance,
+          onTopUp: onTopUp,
+          onTransfer: onTransfer,
+          onHistory: onHistory,
+        );
+      },
+    );
+  }
+}
+
 const _promoSlides = <PromoSlide>[
   PromoSlide(
     title: 'Diskon 50% PickRide',
@@ -209,23 +250,27 @@ const _nearby = <NearbyRestaurantItem>[
     cuisine: 'Indonesian • Nasi Padang',
     rating: 4.8,
     distanceKm: 0.6,
+    imageUrl: 'https://picsum.photos/seed/warung-bu-tini/640/360',
   ),
   NearbyRestaurantItem(
     name: 'Ramen Sora',
     cuisine: 'Japanese • Ramen',
     rating: 4.7,
     distanceKm: 1.2,
+    imageUrl: 'https://picsum.photos/seed/ramen-sora/640/360',
   ),
   NearbyRestaurantItem(
     name: 'Burger Bar',
     cuisine: 'Western • Burger',
     rating: 4.6,
     distanceKm: 1.5,
+    imageUrl: 'https://picsum.photos/seed/burger-bar/640/360',
   ),
   NearbyRestaurantItem(
     name: 'Kopi Kenangan',
     cuisine: 'Coffee • Drinks',
     rating: 4.9,
     distanceKm: 0.4,
+    imageUrl: 'https://picsum.photos/seed/kopi-kenangan/640/360',
   ),
 ];

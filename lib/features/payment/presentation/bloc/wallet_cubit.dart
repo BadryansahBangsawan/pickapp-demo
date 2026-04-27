@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/network/ui_error_message.dart';
 import '../models/payment_models.dart';
+
+enum WalletHistoryFilter { purchases, all }
 
 class WalletState extends Equatable {
   const WalletState({
@@ -12,6 +15,7 @@ class WalletState extends Equatable {
     this.transactions = const <Transaction>[],
     this.paymentMethods = defaultPaymentMethods,
     this.isTopUpProcessing = false,
+    this.historyFilter = WalletHistoryFilter.purchases,
   });
 
   final bool isLoading;
@@ -21,8 +25,23 @@ class WalletState extends Equatable {
   final List<Transaction> transactions;
   final List<PaymentMethod> paymentMethods;
   final bool isTopUpProcessing;
+  final WalletHistoryFilter historyFilter;
 
   bool get hasError => (errorMessage ?? '').isNotEmpty;
+
+  List<Transaction> get purchaseTransactions => transactions
+      .where(
+        (tx) =>
+            tx.type == TransactionType.payment ||
+            tx.type == TransactionType.refund ||
+            tx.type == TransactionType.cashback,
+      )
+      .toList();
+
+  List<Transaction> get visibleTransactions =>
+      historyFilter == WalletHistoryFilter.purchases
+      ? purchaseTransactions
+      : transactions;
 
   WalletState copyWith({
     bool? isLoading,
@@ -33,6 +52,7 @@ class WalletState extends Equatable {
     List<Transaction>? transactions,
     List<PaymentMethod>? paymentMethods,
     bool? isTopUpProcessing,
+    WalletHistoryFilter? historyFilter,
   }) {
     return WalletState(
       isLoading: isLoading ?? this.isLoading,
@@ -42,6 +62,7 @@ class WalletState extends Equatable {
       transactions: transactions ?? this.transactions,
       paymentMethods: paymentMethods ?? this.paymentMethods,
       isTopUpProcessing: isTopUpProcessing ?? this.isTopUpProcessing,
+      historyFilter: historyFilter ?? this.historyFilter,
     );
   }
 
@@ -54,6 +75,7 @@ class WalletState extends Equatable {
     transactions,
     paymentMethods,
     isTopUpProcessing,
+    historyFilter,
   ];
 }
 
@@ -85,12 +107,15 @@ class WalletCubit extends Cubit<WalletState> {
           clearError: true,
         ),
       );
-    } catch (_) {
+    } catch (error) {
       emit(
         state.copyWith(
           isLoading: false,
           isRefreshing: false,
-          errorMessage: 'Gagal memuat data wallet. Coba lagi.',
+          errorMessage: mapUiErrorMessage(
+            error,
+            fallbackMessage: 'Gagal memuat data wallet. Coba lagi.',
+          ),
         ),
       );
     }
@@ -133,11 +158,14 @@ class WalletCubit extends Cubit<WalletState> {
           clearError: true,
         ),
       );
-    } catch (_) {
+    } catch (error) {
       emit(
         state.copyWith(
           isTopUpProcessing: false,
-          errorMessage: 'Top up gagal. Coba lagi.',
+          errorMessage: mapUiErrorMessage(
+            error,
+            fallbackMessage: 'Top up gagal. Coba lagi.',
+          ),
         ),
       );
     }
@@ -151,8 +179,13 @@ class WalletCubit extends Cubit<WalletState> {
   }
 
   void removePaymentMethod(String methodId) {
-    final updated =
-        state.paymentMethods.where((m) => m.id != methodId).toList();
+    final updated = state.paymentMethods
+        .where((m) => m.id != methodId)
+        .toList();
     emit(state.copyWith(paymentMethods: updated));
+  }
+
+  void setHistoryFilter(WalletHistoryFilter filter) {
+    emit(state.copyWith(historyFilter: filter));
   }
 }

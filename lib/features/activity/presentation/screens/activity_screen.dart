@@ -9,7 +9,9 @@ import '../../../../core/widgets/pickup_app_bar.dart';
 import '../../../../core/widgets/pickup_empty_state.dart';
 import '../../../../core/widgets/pickup_error_state.dart';
 import '../../../../core/widgets/pickup_shimmer.dart';
+import '../../../chat/presentation/models/chat_models.dart';
 import '../bloc/activity_cubit.dart';
+import '../models/activity_models.dart';
 import '../widgets/order_card.dart';
 
 class ActivityScreen extends StatelessWidget {
@@ -50,8 +52,9 @@ class ActivityScreen extends StatelessWidget {
       );
     }
 
-    final orders =
-        state.selectedTab == 0 ? state.ongoingOrders : state.completedOrders;
+    final orders = state.selectedTab == 0
+        ? state.ongoingOrders
+        : state.completedOrders;
 
     if (orders.isEmpty) {
       return PickupEmptyState(
@@ -80,10 +83,139 @@ class ActivityScreen extends StatelessWidget {
           return OrderCard(
             order: order,
             onTap: () => context.push(RouteNames.orderDetail, extra: order),
+            onChat: order.isOngoing && order.driverName != null
+                ? () => _onChat(context, order)
+                : null,
+            onCancel: order.isOngoing ? () => _onCancel(context, order) : null,
+            onComplete: order.isOngoing
+                ? () => _onComplete(context, order)
+                : null,
+            onReorder: order.status == OrderStatus.completed
+                ? () => _onReorder(context, order)
+                : null,
           );
         },
       ),
     );
+  }
+
+  void _onChat(BuildContext context, OrderItem order) {
+    final thread = _resolveChatThread(order);
+    if (thread != null) {
+      context.push(RouteNames.chatRoom, extra: thread);
+    } else {
+      context.push(RouteNames.chat);
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          thread != null
+              ? 'Membuka chat ${thread.name}...'
+              : 'Membuka daftar chat...',
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  ChatThread? _resolveChatThread(OrderItem order) {
+    final threads = buildMockChatThreads();
+
+    if (order.serviceType == OrderServiceType.food) {
+      final lowerTitle = order.title.toLowerCase();
+      if (lowerTitle.contains('warung bu tini')) {
+        return _findThreadById(threads, 'food-warung-bu-tini');
+      }
+      return _findThreadById(threads, 'support');
+    }
+
+    if (order.serviceType == OrderServiceType.ride &&
+        (order.driverName ?? '').isNotEmpty) {
+      return _findThreadById(threads, 'driver-rizky') ??
+          _findThreadById(threads, 'support');
+    }
+
+    return _findThreadById(threads, 'support');
+  }
+
+  ChatThread? _findThreadById(List<ChatThread> threads, String threadId) {
+    for (final thread in threads) {
+      if (thread.id == threadId) return thread;
+    }
+    return null;
+  }
+
+  void _onCancel(BuildContext context, OrderItem order) {
+    showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Batalkan Pesanan?'),
+        content: Text('Apakah kamu yakin ingin membatalkan ${order.title}?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Tidak'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: const Text('Ya, Batalkan'),
+          ),
+        ],
+      ),
+    ).then((confirmed) {
+      if (confirmed == true && context.mounted) {
+        context.read<ActivityCubit>().cancelOrder(order.id);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Pesanan dibatalkan.'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    });
+  }
+
+  void _onComplete(BuildContext context, OrderItem order) {
+    showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Selesaikan Pesanan?'),
+        content: Text('Tandai ${order.title} sebagai selesai?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Tidak'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+            child: const Text('Ya, Selesai'),
+          ),
+        ],
+      ),
+    ).then((confirmed) {
+      if (confirmed == true && context.mounted) {
+        context.read<ActivityCubit>().completeOrder(order.id);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Pesanan selesai!'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+      }
+    });
+  }
+
+  void _onReorder(BuildContext context, OrderItem order) {
+    switch (order.serviceType) {
+      case OrderServiceType.ride:
+        context.push(RouteNames.pickLocation);
+      case OrderServiceType.food:
+        context.push(RouteNames.foodHome);
+      case OrderServiceType.send:
+        context.push(RouteNames.sendPackage);
+    }
   }
 }
 
@@ -209,10 +341,8 @@ class _ActivityLoading extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.base),
       child: PickupListShimmer(
         itemCount: 4,
-        itemBuilder: (context, index) => const PickupShimmerBox(
-          height: 140,
-          radius: AppRadius.lg,
-        ),
+        itemBuilder: (context, index) =>
+            const PickupShimmerBox(height: 140, radius: AppRadius.lg),
       ),
     );
   }

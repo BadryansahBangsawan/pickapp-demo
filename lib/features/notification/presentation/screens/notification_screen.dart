@@ -49,7 +49,7 @@ class NotificationScreen extends StatelessWidget {
           }
 
           if (state.hasError && state.notifications.isEmpty) {
-            return PickupErrorState(
+            return PickupErrorState.auto(
               title: 'Gagal memuat notifikasi',
               message: state.errorMessage!,
               onRetry: () =>
@@ -72,8 +72,10 @@ class NotificationScreen extends StatelessWidget {
             child: ListView.separated(
               physics: const AlwaysScrollableScrollPhysics(),
               itemCount: state.notifications.length,
-              separatorBuilder: (context, index) =>
-                  const Divider(height: 1, indent: AppSpacing.base + 40 + AppSpacing.md),
+              separatorBuilder: (context, index) => const Divider(
+                height: 1,
+                indent: AppSpacing.base + 40 + AppSpacing.md,
+              ),
               itemBuilder: (context, index) {
                 final notif = state.notifications[index];
                 return _NotificationTile(
@@ -95,10 +97,7 @@ class NotificationScreen extends StatelessWidget {
 }
 
 class _NotificationTile extends StatelessWidget {
-  const _NotificationTile({
-    required this.notification,
-    required this.onTap,
-  });
+  const _NotificationTile({required this.notification, required this.onTap});
 
   final AppNotification notification;
   final VoidCallback onTap;
@@ -108,7 +107,9 @@ class _NotificationTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        color: notification.isRead ? null : AppColors.primary.withValues(alpha: 0.04),
+        color: notification.isRead
+            ? null
+            : AppColors.primary.withValues(alpha: 0.04),
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.base,
           vertical: AppSpacing.md,
@@ -154,8 +155,7 @@ class _NotificationTile extends StatelessWidget {
                           margin: const EdgeInsets.only(left: AppSpacing.sm),
                           decoration: BoxDecoration(
                             color: AppColors.primary,
-                            borderRadius:
-                                BorderRadius.circular(AppRadius.full),
+                            borderRadius: BorderRadius.circular(AppRadius.full),
                           ),
                         ),
                     ],
@@ -232,11 +232,7 @@ class _NotifLoading extends StatelessWidget {
         itemBuilder: (context, index) => Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            PickupShimmerBox(
-              height: 40,
-              width: 40,
-              radius: AppRadius.sm,
-            ),
+            PickupShimmerBox(height: 40, width: 40, radius: AppRadius.sm),
             SizedBox(width: AppSpacing.md),
             Expanded(
               child: Column(

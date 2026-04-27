@@ -8,6 +8,10 @@ Progress terakhir sudah sampai:
 - **Step 2 — Sprint 1: Auth & Home**: selesai
 - **Step 3 — Sprint 2: PickRide**: selesai (kecuali WebSocket real-time)
 - **Step 4 — Sprint 3: PickFood**: selesai
+- **Step 7 — Sprint 4: Payment & Activity**: selesai
+- **Step 8 — Notifications + Wiring**: selesai
+- **Step 9 — Sprint 5: Chat & Profile**: selesai
+- **Step 10 — Sprint 6: Polish (code-level)**: selesai parsial
 - Bagian yang memang ditunda karena butuh konfigurasi manual tetap ditandai terpisah
 
 ## Pre-Development Setup
@@ -128,9 +132,9 @@ Progress terakhir sudah sampai:
 - [x] Send tracking screen
 
 ### Polish
-- [ ] Shimmer loading untuk semua list screens
+- [x] Shimmer loading untuk semua list screens
 - [x] Empty state illustrations
-- [ ] Error handling screens (no internet, server error)
+- [x] Error handling screens (no internet, server error)
 - [x] Pull to refresh
 - [x] Smooth page transitions
 - [x] Haptic feedback pada button press
@@ -138,7 +142,7 @@ Progress terakhir sudah sampai:
 - [ ] Performance profiling & optimization
 - [x] Unit tests (BLoC, repository, use cases)
 - [x] Widget tests (core widgets)
-- [ ] Integration tests (critical flows)
+- [x] Integration tests (critical flows)
 
 ---
 

@@ -62,7 +62,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     }
 
                     if (state.hasError && state.threads.isEmpty) {
-                      return PickupErrorState(
+                      return PickupErrorState.auto(
                         title: 'Chat tidak dapat dimuat',
                         message: state.errorMessage!,
                         onRetry: () =>

@@ -6,12 +6,27 @@ import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/widgets/pickup_app_bar.dart';
 import '../../../../core/widgets/pickup_button.dart';
 import '../../../../core/widgets/pickup_empty_state.dart';
+import '../../../../core/widgets/pickup_shimmer.dart';
 import '../../../../core/widgets/pickup_text_field.dart';
 import '../bloc/profile_cubit.dart';
 import '../models/profile_models.dart';
 
-class SavedAddressesScreen extends StatelessWidget {
+class SavedAddressesScreen extends StatefulWidget {
   const SavedAddressesScreen({super.key});
+
+  @override
+  State<SavedAddressesScreen> createState() => _SavedAddressesScreenState();
+}
+
+class _SavedAddressesScreenState extends State<SavedAddressesScreen> {
+  bool _isRefreshing = false;
+
+  Future<void> _refreshList() async {
+    setState(() => _isRefreshing = true);
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+    if (!mounted) return;
+    setState(() => _isRefreshing = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +40,10 @@ class SavedAddressesScreen extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
+            if (_isRefreshing) {
+              return const _SavedAddressesLoading();
+            }
+
             if (state.addresses.isEmpty) {
               return PickupEmptyState(
                 title: 'Belum ada alamat',
@@ -37,8 +56,7 @@ class SavedAddressesScreen extends StatelessWidget {
             }
 
             return RefreshIndicator(
-              onRefresh: () async =>
-                  Future<void>.delayed(const Duration(milliseconds: 500)),
+              onRefresh: _refreshList,
               child: ListView.separated(
                 padding: const EdgeInsets.fromLTRB(
                   AppSpacing.base,
@@ -215,6 +233,45 @@ class SavedAddressesScreen extends StatelessWidget {
     } else {
       cubit.updateAddress(address);
     }
+  }
+}
+
+class _SavedAddressesLoading extends StatelessWidget {
+  const _SavedAddressesLoading();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.base),
+      child: PickupListShimmer(
+        itemBuilder: (context, index) => Container(
+          padding: const EdgeInsets.all(AppSpacing.base),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Row(
+            children: const [
+              PickupShimmerBox(height: 42, width: 42, radius: AppRadius.md),
+              SizedBox(width: AppSpacing.base),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PickupShimmerBox(height: 14, width: 120),
+                    SizedBox(height: AppSpacing.sm),
+                    PickupShimmerBox(height: 12, width: double.infinity),
+                    SizedBox(height: AppSpacing.xs),
+                    PickupShimmerBox(height: 12, width: 180),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

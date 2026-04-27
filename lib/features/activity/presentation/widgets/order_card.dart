@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
@@ -8,10 +9,22 @@ import '../../../../core/widgets/pickup_card.dart';
 import '../models/activity_models.dart';
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({super.key, required this.order, required this.onTap});
+  const OrderCard({
+    super.key,
+    required this.order,
+    required this.onTap,
+    this.onCancel,
+    this.onChat,
+    this.onReorder,
+    this.onComplete,
+  });
 
   final OrderItem order;
   final VoidCallback onTap;
+  final VoidCallback? onCancel;
+  final VoidCallback? onChat;
+  final VoidCallback? onReorder;
+  final VoidCallback? onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +138,53 @@ class OrderCard extends StatelessWidget {
               ],
             ),
           ],
+          // Action buttons
+          if (order.isOngoing && (onChat != null || onCancel != null || onComplete != null)) ...[
+            const SizedBox(height: AppSpacing.md),
+            const Divider(height: 1),
+            const SizedBox(height: AppSpacing.md),
+            Row(
+              children: [
+                if (onChat != null)
+                  _ActionChip(
+                    icon: Icons.chat_bubble_outline,
+                    label: 'Chat',
+                    onTap: onChat!,
+                  ),
+                if (onChat != null && onComplete != null)
+                  const SizedBox(width: AppSpacing.sm),
+                if (onComplete != null)
+                  _ActionChip(
+                    icon: Icons.check_circle_outline,
+                    label: 'Selesaikan',
+                    color: AppColors.primary,
+                    onTap: onComplete!,
+                  ),
+                const Spacer(),
+                if (onCancel != null)
+                  _ActionChip(
+                    icon: Icons.close,
+                    label: 'Batalkan',
+                    color: AppColors.error,
+                    onTap: onCancel!,
+                  ),
+              ],
+            ),
+          ],
+          if (!order.isOngoing && order.status == OrderStatus.completed && onReorder != null) ...[
+            const SizedBox(height: AppSpacing.md),
+            const Divider(height: 1),
+            const SizedBox(height: AppSpacing.md),
+            SizedBox(
+              width: double.infinity,
+              child: _ActionChip(
+                icon: Icons.refresh,
+                label: 'Pesan Lagi',
+                color: AppColors.primary,
+                onTap: onReorder!,
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -150,6 +210,55 @@ class OrderCard extends StatelessWidget {
       case OrderServiceType.send:
         return AppColors.warning;
     }
+  }
+}
+
+class _ActionChip extends StatelessWidget {
+  const _ActionChip({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.color,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final chipColor = color ?? AppColors.textSecondary;
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.selectionClick();
+        onTap();
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: AppTouchTarget.minimum,
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        decoration: BoxDecoration(
+          border: Border.all(color: chipColor.withValues(alpha: 0.3)),
+          borderRadius: BorderRadius.circular(AppRadius.full),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 16, color: chipColor),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: chipColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

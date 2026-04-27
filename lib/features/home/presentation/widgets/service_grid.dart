@@ -44,35 +44,17 @@ class _ServiceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.background,
+      color: Colors.transparent,
       borderRadius: BorderRadius.circular(AppRadius.md),
       child: InkWell(
         onTap: item.onTap,
         borderRadius: BorderRadius.circular(AppRadius.md),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x0F000000),
-                blurRadius: 8,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
+        child: Padding(
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: item.color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                ),
-                child: Icon(item.icon, color: item.color, size: 26),
-              ),
+              Icon(item.icon, color: item.color, size: 32),
               const SizedBox(height: AppSpacing.sm),
               Text(
                 item.label,

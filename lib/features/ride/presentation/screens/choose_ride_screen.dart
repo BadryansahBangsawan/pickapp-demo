@@ -12,6 +12,7 @@ import '../../../../core/widgets/pickup_card.dart';
 import '../models/ride_models.dart';
 import '../widgets/map_widget.dart';
 import '../widgets/ride_option_card.dart';
+import '../widgets/slide_to_act_widget.dart';
 
 class ChooseRideScreen extends StatefulWidget {
   const ChooseRideScreen({super.key, this.initialQuote});
@@ -256,9 +257,9 @@ class _ChooseRideScreenState extends State<ChooseRideScreen> {
                 AppSpacing.base,
                 AppSpacing.base,
               ),
-              child: PickupButton(
+              child: SlideToActWidget(
                 label: 'Pesan ${quote.option.title}',
-                onPressed: _startSearchingDriver,
+                onSubmitted: _startSearchingDriver,
               ),
             ),
           ],

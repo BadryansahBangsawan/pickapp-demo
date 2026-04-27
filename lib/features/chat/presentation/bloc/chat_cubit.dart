@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/network/ui_error_message.dart';
 import '../models/chat_models.dart';
 import '../services/mock_chat_socket_service.dart';
 
@@ -99,12 +100,15 @@ class ChatCubit extends Cubit<ChatState> {
           clearError: true,
         ),
       );
-    } catch (_) {
+    } catch (error) {
       emit(
         state.copyWith(
           isLoading: false,
           isRefreshing: false,
-          errorMessage: 'Gagal memuat daftar chat. Coba lagi.',
+          errorMessage: mapUiErrorMessage(
+            error,
+            fallbackMessage: 'Gagal memuat daftar chat. Coba lagi.',
+          ),
         ),
       );
     }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
+import '../../../../core/network/ui_error_message.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../../core/widgets/pickup_app_bar.dart';
 import '../../../../core/widgets/pickup_empty_state.dart';
@@ -54,11 +55,14 @@ class _FoodHomeScreenState extends State<FoodHomeScreen> {
       await Future<void>.delayed(const Duration(milliseconds: 700));
       if (!mounted) return;
       setState(() => _loading = false);
-    } catch (_) {
+    } catch (error) {
       if (!mounted) return;
       setState(() {
         _loading = false;
-        _error = 'Gagal memuat restoran. Coba lagi.';
+        _error = mapUiErrorMessage(
+          error,
+          fallbackMessage: 'Gagal memuat restoran. Coba lagi.',
+        );
       });
     }
   }
@@ -72,11 +76,10 @@ class _FoodHomeScreenState extends State<FoodHomeScreen> {
   Widget _buildContent(List<Restaurant> restaurants) {
     if (_loading) return const _FoodHomeLoading();
     if (_error != null) {
-      return PickupErrorState(
+      return PickupErrorState.auto(
         title: 'Tidak bisa memuat restoran',
         message: _error!,
         onRetry: _loadInitial,
-        icon: Icons.cloud_off_outlined,
       );
     }
     if (restaurants.isEmpty) {

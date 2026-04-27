@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/network/ui_error_message.dart';
 import '../models/activity_models.dart';
 
 class ActivityState extends Equatable {
@@ -80,12 +81,15 @@ class ActivityCubit extends Cubit<ActivityState> {
           clearError: true,
         ),
       );
-    } catch (_) {
+    } catch (error) {
       emit(
         state.copyWith(
           isLoading: false,
           isRefreshing: false,
-          errorMessage: 'Gagal memuat riwayat pesanan. Coba lagi.',
+          errorMessage: mapUiErrorMessage(
+            error,
+            fallbackMessage: 'Gagal memuat riwayat pesanan. Coba lagi.',
+          ),
         ),
       );
     }
@@ -97,5 +101,49 @@ class ActivityCubit extends Cubit<ActivityState> {
 
   void switchTab(int index) {
     emit(state.copyWith(selectedTab: index));
+  }
+
+  void cancelOrder(String orderId) {
+    final updated = state.orders.map((o) {
+      if (o.id != orderId) return o;
+      return OrderItem(
+        id: o.id,
+        serviceType: o.serviceType,
+        title: o.title,
+        subtitle: o.subtitle,
+        status: OrderStatus.cancelled,
+        amount: o.amount,
+        createdAt: o.createdAt,
+        driverName: o.driverName,
+        driverPhone: o.driverPhone,
+        driverPhoto: o.driverPhoto,
+        vehicleInfo: o.vehicleInfo,
+        rating: o.rating,
+        items: o.items,
+      );
+    }).toList();
+    emit(state.copyWith(orders: updated));
+  }
+
+  void completeOrder(String orderId) {
+    final updated = state.orders.map((o) {
+      if (o.id != orderId) return o;
+      return OrderItem(
+        id: o.id,
+        serviceType: o.serviceType,
+        title: o.title,
+        subtitle: o.subtitle,
+        status: OrderStatus.completed,
+        amount: o.amount,
+        createdAt: o.createdAt,
+        driverName: o.driverName,
+        driverPhone: o.driverPhone,
+        driverPhoto: o.driverPhoto,
+        vehicleInfo: o.vehicleInfo,
+        rating: 5.0,
+        items: o.items,
+      );
+    }).toList();
+    emit(state.copyWith(orders: updated));
   }
 }

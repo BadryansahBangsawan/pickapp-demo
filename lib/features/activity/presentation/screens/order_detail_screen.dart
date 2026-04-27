@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/constants/app_typography.dart';
+import '../../../../core/router/route_names.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/widgets/pickup_app_bar.dart';
+import '../../../../core/widgets/pickup_button.dart';
 import '../../../../core/widgets/pickup_card.dart';
 import '../models/activity_models.dart';
 
@@ -33,7 +36,7 @@ class OrderDetailScreen extends StatelessWidget {
             _buildItemsCard(),
           ],
           const SizedBox(height: AppSpacing.base),
-          _buildReceiptCard(),
+          _buildReceiptCard(context),
           const SizedBox(height: AppSpacing.xxl),
         ],
       ),
@@ -87,7 +90,11 @@ class OrderDetailScreen extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [
-              const Icon(Icons.access_time, size: 16, color: AppColors.textSecondary),
+              const Icon(
+                Icons.access_time,
+                size: 16,
+                color: AppColors.textSecondary,
+              ),
               const SizedBox(width: AppSpacing.sm),
               Text(
                 Formatters.dateTime(order.createdAt),
@@ -133,10 +140,7 @@ class OrderDetailScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      order.driverName!,
-                      style: AppTypography.bodyMedium,
-                    ),
+                    Text(order.driverName!, style: AppTypography.bodyMedium),
                     if (order.vehicleInfo != null)
                       Text(order.vehicleInfo!, style: AppTypography.small),
                   ],
@@ -186,34 +190,36 @@ class OrderDetailScreen extends StatelessWidget {
             style: AppTypography.label.copyWith(fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: AppSpacing.md),
-          ...order.items.map((item) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-            child: Row(
-              children: [
-                Text(
-                  '${item.quantity}x',
-                  style: AppTypography.caption.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+          ...order.items.map(
+            (item) => Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: Row(
+                children: [
+                  Text(
+                    '${item.quantity}x',
+                    style: AppTypography.caption.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(child: Text(item.name, style: AppTypography.body)),
-                Text(
-                  Formatters.currency(item.price),
-                  style: AppTypography.caption.copyWith(
-                    fontWeight: FontWeight.w600,
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(child: Text(item.name, style: AppTypography.body)),
+                  Text(
+                    Formatters.currency(item.price),
+                    style: AppTypography.caption.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildReceiptCard() {
+  Widget _buildReceiptCard(BuildContext context) {
     int subtotal = order.amount;
     if (order.items.isNotEmpty) {
       subtotal = order.items.fold(
@@ -233,7 +239,10 @@ class OrderDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           if (order.items.isNotEmpty) ...[
-            _ReceiptRow(label: 'Subtotal', value: Formatters.currency(subtotal)),
+            _ReceiptRow(
+              label: 'Subtotal',
+              value: Formatters.currency(subtotal),
+            ),
             _ReceiptRow(
               label: 'Ongkos kirim',
               value: deliveryFee > 0
@@ -251,9 +260,13 @@ class OrderDetailScreen extends StatelessWidget {
             isBold: true,
           ),
           const SizedBox(height: AppSpacing.sm),
-          _ReceiptRow(
-            label: 'Metode pembayaran',
-            value: 'PickPay',
+          _ReceiptRow(label: 'Metode pembayaran', value: 'PickPay'),
+          const SizedBox(height: AppSpacing.md),
+          PickupButton(
+            label: 'Lihat Riwayat Pembayaran',
+            icon: Icons.receipt_long_outlined,
+            variant: PickupButtonVariant.secondary,
+            onPressed: () => context.go(RouteNames.payment),
           ),
         ],
       ),

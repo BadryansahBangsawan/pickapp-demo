@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/network/ui_error_message.dart';
 import '../models/notification_models.dart';
 
 class NotificationState extends Equatable {
@@ -36,7 +37,12 @@ class NotificationState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [isLoading, isRefreshing, errorMessage, notifications];
+  List<Object?> get props => [
+    isLoading,
+    isRefreshing,
+    errorMessage,
+    notifications,
+  ];
 }
 
 class NotificationCubit extends Cubit<NotificationState> {
@@ -66,12 +72,15 @@ class NotificationCubit extends Cubit<NotificationState> {
           clearError: true,
         ),
       );
-    } catch (_) {
+    } catch (error) {
       emit(
         state.copyWith(
           isLoading: false,
           isRefreshing: false,
-          errorMessage: 'Gagal memuat notifikasi. Coba lagi.',
+          errorMessage: mapUiErrorMessage(
+            error,
+            fallbackMessage: 'Gagal memuat notifikasi. Coba lagi.',
+          ),
         ),
       );
     }
@@ -89,8 +98,9 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   void markAllAsRead() {
-    final updated =
-        state.notifications.map((n) => n.copyWith(isRead: true)).toList();
+    final updated = state.notifications
+        .map((n) => n.copyWith(isRead: true))
+        .toList();
     emit(state.copyWith(notifications: updated));
   }
 }

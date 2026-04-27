@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_spacing.dart';
 import '../constants/app_typography.dart';
@@ -9,6 +10,18 @@ class AppTheme {
 
   static ThemeData get light {
     final base = ThemeData.light(useMaterial3: true);
+    final textTheme = GoogleFonts.poppinsTextTheme(
+      const TextTheme(
+        displayLarge: AppTypography.h1,
+        headlineMedium: AppTypography.h2,
+        titleLarge: AppTypography.h3,
+        bodyLarge: AppTypography.body,
+        bodyMedium: AppTypography.caption,
+        bodySmall: AppTypography.small,
+        labelLarge: AppTypography.button,
+        labelMedium: AppTypography.label,
+      ),
+    );
 
     return base.copyWith(
       scaffoldBackgroundColor: AppColors.background,
@@ -34,7 +47,7 @@ class AppTheme {
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.light,
         ),
-        titleTextStyle: TextStyle(
+        titleTextStyle: GoogleFonts.poppins(
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
@@ -42,16 +55,8 @@ class AppTheme {
         iconTheme: IconThemeData(color: AppColors.textPrimary, size: 24),
       ),
 
-      textTheme: const TextTheme(
-        displayLarge: AppTypography.h1,
-        headlineMedium: AppTypography.h2,
-        titleLarge: AppTypography.h3,
-        bodyLarge: AppTypography.body,
-        bodyMedium: AppTypography.caption,
-        bodySmall: AppTypography.small,
-        labelLarge: AppTypography.button,
-        labelMedium: AppTypography.label,
-      ),
+      textTheme: textTheme,
+      primaryTextTheme: GoogleFonts.poppinsTextTheme(base.primaryTextTheme),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
