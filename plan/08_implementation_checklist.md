@@ -83,23 +83,23 @@ Progress terakhir sudah sampai:
 ## Sprint 4: Payment & Activity
 
 ### Payment
-- [ ] Wallet screen (balance + actions + history)
-- [ ] Top up screen (amount input + payment method)
-- [ ] Top up flow dengan Midtrans/Xendit
-- [ ] Transaction history list
-- [ ] Payment method management
+- [x] Wallet screen (balance + actions + history)
+- [x] Top up screen (amount input + payment method)
+- [ ] Top up flow dengan Midtrans/Xendit (butuh integrasi backend)
+- [x] Transaction history list
+- [x] Payment method management
 
 ### Activity
-- [ ] Activity screen (tabs: ongoing / completed)
-- [ ] Order card widget
-- [ ] Order detail screen
-- [ ] Receipt view
+- [x] Activity screen (tabs: ongoing / completed)
+- [x] Order card widget
+- [x] Order detail screen
+- [x] Receipt view
 
 ### Notifications
-- [ ] FCM setup (Android & iOS)
-- [ ] Notification center screen
-- [ ] Push notification handling (foreground & background)
-- [ ] Deep linking dari notification
+- [ ] FCM setup (Android & iOS) (butuh konfigurasi Firebase)
+- [x] Notification center screen
+- [ ] Push notification handling (foreground & background) (butuh FCM)
+- [x] Deep linking dari notification
 
 ## Sprint 5: Chat & Profile
 

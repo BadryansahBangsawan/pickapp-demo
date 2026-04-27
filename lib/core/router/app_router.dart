@@ -18,8 +18,15 @@ import '../../features/food/presentation/screens/food_home_screen.dart';
 import '../../features/food/presentation/screens/food_order_confirm_screen.dart';
 import '../../features/food/presentation/screens/food_tracking_screen.dart';
 import '../../features/food/presentation/screens/restaurant_detail_screen.dart';
+import '../../features/activity/presentation/models/activity_models.dart';
+import '../../features/activity/presentation/screens/activity_screen.dart';
+import '../../features/activity/presentation/screens/order_detail_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/main_shell.dart';
+import '../../features/notification/presentation/screens/notification_screen.dart';
+import '../../features/payment/presentation/screens/payment_methods_screen.dart';
+import '../../features/payment/presentation/screens/top_up_screen.dart';
+import '../../features/payment/presentation/screens/wallet_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/help_faq_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -82,21 +89,13 @@ class AppRouter {
           ),
           GoRoute(
             path: RouteNames.activity,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(
-                title: 'Activity',
-                icon: Icons.receipt_long_outlined,
-              ),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ActivityScreen()),
           ),
           GoRoute(
             path: RouteNames.payment,
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: PlaceholderTabScreen(
-                title: 'PickPay',
-                icon: Icons.account_balance_wallet_outlined,
-              ),
-            ),
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: WalletScreen()),
           ),
           GoRoute(
             path: RouteNames.chat,
@@ -260,6 +259,36 @@ class AppRouter {
         path: RouteNames.helpFaq,
         pageBuilder: (context, state) =>
             _buildTransitionPage(state, const HelpFaqScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.topUp,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const TopUpScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.paymentMethods,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const PaymentMethodsScreen()),
+      ),
+      GoRoute(
+        path: RouteNames.orderDetail,
+        pageBuilder: (context, state) {
+          final order = state.extra is OrderItem
+              ? state.extra as OrderItem
+              : null;
+          if (order == null) {
+            return _buildTransitionPage(state, const ActivityScreen());
+          }
+          return _buildTransitionPage(
+            state,
+            OrderDetailScreen(order: order),
+          );
+        },
+      ),
+      GoRoute(
+        path: RouteNames.notifications,
+        pageBuilder: (context, state) =>
+            _buildTransitionPage(state, const NotificationScreen()),
       ),
     ],
   );

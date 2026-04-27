@@ -39,9 +39,13 @@ class RouteNames {
   static const String packageDetail = '/send/detail';
   static const String sendTracking = '/send/tracking';
 
-  // Wallet
+  // Wallet / Payment
   static const String wallet = '/wallet';
   static const String topUp = '/wallet/topup';
+  static const String paymentMethods = '/wallet/methods';
+
+  // Activity
+  static const String orderDetail = '/activity/detail';
 
   // Notifications
   static const String notifications = '/notifications';

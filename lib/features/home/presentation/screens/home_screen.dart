@@ -7,6 +7,7 @@ import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/constants/app_typography.dart';
 import '../../../../core/router/route_names.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
+import '../../../notification/presentation/bloc/notification_cubit.dart';
 import '../widgets/nearby_restaurants.dart';
 import '../widgets/promo_banner.dart';
 import '../widgets/recent_orders.dart';
@@ -100,12 +101,21 @@ class _Header extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_outlined,
-              color: AppColors.textPrimary,
-            ),
-            onPressed: () {},
+          BlocBuilder<NotificationCubit, NotificationState>(
+            builder: (context, state) {
+              final unread = state.unreadCount;
+              return IconButton(
+                icon: Badge(
+                  isLabelVisible: unread > 0,
+                  label: Text('$unread'),
+                  child: const Icon(
+                    Icons.notifications_outlined,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                onPressed: () => context.push(RouteNames.notifications),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(
