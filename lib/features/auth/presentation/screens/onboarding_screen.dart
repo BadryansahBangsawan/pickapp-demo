@@ -125,7 +125,7 @@ class _OnboardingPage extends StatelessWidget {
             width: 200,
             height: 200,
             decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.08),
+              color: AppColors.primary.withOpacity(0.08),
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,

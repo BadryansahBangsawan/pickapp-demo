@@ -114,7 +114,7 @@ class _PromoCard extends StatelessWidget {
                   slide.subtitle,
                   style: TextStyle(
                     fontSize: 13,
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: Colors.white.withOpacity(0.9),
                   ),
                 ),
               ],
@@ -123,7 +123,7 @@ class _PromoCard extends StatelessWidget {
           Icon(
             Icons.local_offer_outlined,
             size: 64,
-            color: Colors.white.withValues(alpha: 0.4),
+            color: Colors.white.withOpacity(0.4),
           ),
         ],
       ),

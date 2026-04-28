@@ -36,13 +36,13 @@ class AppTheme {
         onError: Colors.white,
       ),
 
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        systemOverlayStyle: SystemUiOverlayStyle(
+        systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.light,
@@ -52,7 +52,7 @@ class AppTheme {
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
         ),
-        iconTheme: IconThemeData(color: AppColors.textPrimary, size: 24),
+        iconTheme: const IconThemeData(color: AppColors.textPrimary, size: 24),
       ),
 
       textTheme: textTheme,
@@ -62,13 +62,17 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
-          disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
+          disabledBackgroundColor: AppColors.primary.withOpacity(0.4),
           minimumSize: const Size.fromHeight(52),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
           elevation: 0,
-          textStyle: AppTypography.button,
+          textStyle: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            height: 1.2,
+          ),
         ),
       ),
 
@@ -80,14 +84,22 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
-          textStyle: AppTypography.button.copyWith(fontWeight: FontWeight.w500),
+          textStyle: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            height: 1.2,
+          ),
         ),
       ),
 
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
-          textStyle: AppTypography.button,
+          textStyle: GoogleFonts.poppins(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            height: 1.2,
+          ),
           minimumSize: const Size(
             AppTouchTarget.minimum,
             AppTouchTarget.minimum,
@@ -102,8 +114,8 @@ class AppTheme {
           horizontal: AppSpacing.base,
           vertical: AppSpacing.base,
         ),
-        hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 16),
-        labelStyle: const TextStyle(
+        hintStyle: GoogleFonts.poppins(color: AppColors.textHint, fontSize: 16),
+        labelStyle: GoogleFonts.poppins(
           color: AppColors.textSecondary,
           fontSize: 14,
         ),
@@ -123,15 +135,15 @@ class AppTheme {
         ),
       ),
 
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.background,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textHint,
-        selectedLabelStyle: TextStyle(
+        selectedLabelStyle: GoogleFonts.poppins(
           fontSize: 12,
           fontWeight: FontWeight.w600,
         ),
-        unselectedLabelStyle: TextStyle(fontSize: 12),
+        unselectedLabelStyle: GoogleFonts.poppins(fontSize: 12),
         type: BottomNavigationBarType.fixed,
         elevation: 0,
         showUnselectedLabels: true,

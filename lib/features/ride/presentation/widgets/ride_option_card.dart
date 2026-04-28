@@ -36,7 +36,7 @@ class RideOptionCard extends StatelessWidget {
               width: AppTouchTarget.minimum,
               height: AppTouchTarget.minimum,
               decoration: BoxDecoration(
-                color: option.color.withValues(alpha: 0.14),
+                color: option.color.withOpacity(0.14),
                 borderRadius: BorderRadius.circular(AppRadius.md),
               ),
               child: Icon(option.icon, color: option.color),
